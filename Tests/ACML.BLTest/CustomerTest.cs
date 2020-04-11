@@ -11,7 +11,7 @@ namespace ACM.BLTest
         public void FullNameTestValid()
         {
             //-- Arrange
-            Costumer customer = new Costumer
+            Customer customer = new Customer
             {
                 FirstName = "Bilbo",
                 LastName = "Baggins"
@@ -29,7 +29,7 @@ namespace ACM.BLTest
         public void FullNameFirstNameEmpty()
         {
             //-- Arrange
-            Costumer customer = new Costumer
+            Customer customer = new Customer
             {
                 FirstName = "Baggins"
             };
@@ -46,7 +46,7 @@ namespace ACM.BLTest
         public void FullNameLastNameEmpty()
         {
             //-- Arrange
-            Costumer customer = new Costumer
+            Customer customer = new Customer
             {
                 LastName = "Bilbo"
             };
@@ -57,6 +57,68 @@ namespace ACM.BLTest
 
             //-- Assert
             Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void StaticTest()
+        {
+            //-- Arrange
+            var c1 = new Customer();
+            c1.FirstName = "Bilbo";
+            Customer.InstanceCount += 1;
+
+            var c2 = new Customer();
+            c2.FirstName = "Frodo";
+            Customer.InstanceCount += 1;
+
+            var c3 = new Customer();
+            c3.FirstName = "Rosie";
+            Customer.InstanceCount += 1;
+
+            //-- Act
+
+            //-- Assert
+            Assert.AreEqual(3, Customer.InstanceCount);
+        }
+
+        [TestMethod]
+        public void CustomerValidateValid()
+        {
+            //-- Arrange
+            Customer customer = new Customer
+            {
+                FirstName = "Bilbo",
+                LastName = "Baggins",
+                EmailAdress = "buibo@ring.com"
+            };
+
+            var expected = true;
+
+            //--Act
+            var actual = customer.Validate();
+
+            //-- Assert
+            Assert.AreEqual(expected,actual);
+        }
+
+        [TestMethod]
+        public void CustomerValidateInvalid()
+        {
+            //-- Arrange
+            Customer customer = new Customer
+            {
+                FirstName = "",
+                LastName = "",
+                EmailAdress = "buibo@ring.com"
+            };
+
+            var expected = false;
+
+            //--Act
+            var actual = customer.Validate();
+
+            //-- Assert
+            Assert.AreEqual(expected,actual);
         }
     }
 }

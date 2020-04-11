@@ -6,9 +6,21 @@ using System.Threading.Tasks;
 
 namespace ACM.BL
 {
-    public class Costumer
+    public class Customer
     {
-        public int CostumerId { get; private set; }
+        public Customer() : this(0)
+        {
+
+        }
+
+        public Customer(int id)
+        {
+            Id = id;
+            AddressList = new List<Address>();
+        }
+
+        public List<Address> AddressList { get; set; }
+        public int Id { get; private set; }
         public string EmailAdress { get; set; }
         public string FirstName { get; set; }
         public string FullName
@@ -29,9 +41,13 @@ namespace ACM.BL
 
             }
         }
+
+        public static int InstanceCount { get; set; }
+
         private string _lastName;
         public string LastName
-        { get
+        { 
+            get
             {
                 return _lastName;
             }
@@ -39,6 +55,16 @@ namespace ACM.BL
             {
                 _lastName = value;
             }
+        }
+
+        public bool Validate()
+        {
+            var isValid = true;
+
+            if (string.IsNullOrWhiteSpace(LastName)) isValid = false;
+            if (string.IsNullOrWhiteSpace(EmailAdress)) isValid = false;
+
+            return isValid;
         }
     }
 }
