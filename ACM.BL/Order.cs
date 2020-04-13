@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Acme.Common;
+using System;
 
 namespace ACM.BL
 {
-    public class Order
+    public class Order : EntityBase, ILoggable
     {
         public Order()
         {
@@ -20,7 +17,10 @@ namespace ACM.BL
 
         public int Id { get; set; }
         public DateTimeOffset? Date { get; set; }
-        public bool Validate()
+
+        public string Log() => $"{Id}: Date: {this.Date.Value.Date} : Status {this.EntityState.ToString()}";
+
+        public override bool Validate()
         {
             var isValid = true;
 
